@@ -1,0 +1,3 @@
+[submodule "Samples"]
+	path = Samples
+	url = https://github.com/YahboomTechnology/Raspberry-Pi-RGB-Cooling-HAT
