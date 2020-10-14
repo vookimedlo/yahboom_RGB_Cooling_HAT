@@ -53,15 +53,14 @@ void get_ip_address(char *output_value, size_t output_value_size) {
 
     while (if_addrs != NULL) {
         if (if_addrs->ifa_addr->sa_family == AF_INET) {
-            const void *tmp_addr_ptr = &((struct sockaddr_in *)if_addrs->ifa_addr)->sin_addr;
+            const void *tmp_addr_ptr = &((struct sockaddr_in *) if_addrs->ifa_addr)->sin_addr;
             char address_buffer[INET_ADDRSTRLEN];
             inet_ntop(AF_INET, tmp_addr_ptr, address_buffer, INET_ADDRSTRLEN);
 
             if (strcmp(if_addrs->ifa_name, "eth0") == 0) {
                 snprintf(output_value, output_value_size, "eth0:%s", address_buffer);
                 break;
-            }
-            else if (strcmp(if_addrs->ifa_name, "wlan0") == 0) {
+            } else if (strcmp(if_addrs->ifa_name, "wlan0") == 0) {
                 snprintf(output_value, output_value_size, "wlan0:%s", address_buffer);
                 break;
             }
