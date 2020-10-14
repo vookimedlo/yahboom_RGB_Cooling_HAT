@@ -14,4 +14,6 @@ enum fan_speed {
     fan_speed_90_percent,
 };
 
+void set_fan_speed(enum fan_speed value);
+
 #endif //COOLING_HAT_FAN_H

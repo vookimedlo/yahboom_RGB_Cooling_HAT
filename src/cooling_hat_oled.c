@@ -3,6 +3,7 @@
 
 void oled_initialization() {
     ssd1306_begin(SSD1306_SWITCHCAPVCC, SSD1306_I2C_ADDRESS);
+    oled_clear();
 }
 
 void oled_clear() {
