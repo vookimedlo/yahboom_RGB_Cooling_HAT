@@ -2,6 +2,7 @@
 #define COOLING_HAT_I2C_H
 
 #include <stdbool.h>
+#include <stdint.h>
 
 enum i2c_register {
     i2c_rgb_light_register = 0x00,
@@ -15,6 +16,6 @@ enum i2c_register {
 
 bool i2c_init();
 
-void i2c_write(enum i2c_address reg, uint8_t data);
+void i2c_write(enum i2c_register reg, uint8_t data);
 
 #endif //COOLING_HAT_I2C_H

@@ -741,14 +741,14 @@ void ssd1306_write(int c) {
     }
 }
 
-void ssd1306_drawString(char *str) {
+void ssd1306_drawString(const char *str) {
     int i, end;
     end = strlen(str);
     for (i = 0; i < end; i++)
         ssd1306_write(str[i]);
 }
 
-void ssd1306_drawText(int x, int y, char *str) {
+void ssd1306_drawText(int x, int y, const char *str) {
     int i, end;
     end = strlen(str);
     int point_x = x;

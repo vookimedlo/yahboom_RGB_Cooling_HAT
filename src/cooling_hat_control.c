@@ -14,7 +14,7 @@
 #define TEMP_REFRESH_DELAY_IN_LOOP_COUNT 1 // a second
 
 static struct oled_information information = {0};
-static unsigned int loop_counter = 0
+static unsigned int loop_counter = 0;
 static double previous_temperature = 0, temperature = 0;
 static bool has_information_changed = false;
 
@@ -33,7 +33,7 @@ struct temperature_fan_range temperature_fan_ranges[] = {
         {.temperature = 255, .speed = fan_speed_100_percent},
 };
 
-int main(char *argv[], int argv) {
+int main(int argc, char *argv[]) {
 
     if (!i2c_init()) {
         return -1;
@@ -68,14 +68,14 @@ int main(char *argv[], int argv) {
         if (previous_temperature != temperature) {
             int index = 0;
             has_information_changed = true;
-            for (; index < sizeof(temperature_fan_ranges); ++i) {
-                if (temperature_fan_ranges[index].temperature < uint8_t(temperature)) {
+            for (; index < sizeof(temperature_fan_ranges); ++index) {
+                if (temperature_fan_ranges[index].temperature < (uint8_t)temperature) {
                     set_fan_speed(temperature_fan_ranges[index].speed);
                     break;
                 }
             }
 
-            previous_temperature = temperature
+            previous_temperature = temperature;
         }
 
         if (has_information_changed) {
