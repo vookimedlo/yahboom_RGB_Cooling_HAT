@@ -23,7 +23,7 @@ void get_cpu_load(char *output_value, size_t output_value_size) {
         return;
     }
     const unsigned long average_cpu_load = sys_info.loads[0] / 1000;
-    snprint(output_value, output_value_size, "CPU:%ld%%", average_cpu_load);
+    snprintf(output_value, output_value_size, "CPU:%ld%%", average_cpu_load);
 }
 
 void get_ram_usage(char *output_value, size_t output_value_size) {
@@ -75,12 +75,12 @@ void get_temperature(char *output_value, size_t output_value_size, double temper
 }
 
 double get_temperature_double() {
-    char buf[32];
     double temperature = 0;
     int fd_temp = open(TEMPERATURE_PATH, O_RDONLY);
     if (fd_temp >= 0) {
+        char buf[32];
         if (read(fd_temp, buf, sizeof(buf)) > 0)
-            temp = atoi(buf) / 1000.0;
+            temperature = atoi(buf) / 1000.0;
         close(fd_temp);
     }
     return temperature;

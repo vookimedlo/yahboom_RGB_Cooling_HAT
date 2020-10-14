@@ -10,5 +10,5 @@ bool i2c_init() {
 }
 
 void i2c_write(enum i2c_register reg, uint8_t data) {
-    wiringPiI2CWriteReg8(fd_i2c, address, data);
+    wiringPiI2CWriteReg8(fd_i2c, reg, data);
 }
