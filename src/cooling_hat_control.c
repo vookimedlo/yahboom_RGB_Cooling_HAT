@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
             int index = 0;
             has_information_changed = true;
             for (; index < sizeof(temperature_fan_ranges); ++index) {
-                if ((uint8_t)(temperature + 0.5)) < temperature_fan_ranges[index].temperature {
+                if ((uint8_t)(temperature + 0.5) < temperature_fan_ranges[index].temperature) {
                     set_fan_speed(temperature_fan_ranges[index].speed);
                     break;
                 }
