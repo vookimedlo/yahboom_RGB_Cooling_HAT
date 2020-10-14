@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     usleep(BASIC_DELAY_IN_MS);
 
     // The IPv4 address will be retrieved only once.
-    //get_ip_address(information.m_network_address, sizeof(information.m_network_address));
+    get_ip_address(information.m_network_address, sizeof(information.m_network_address));
 
     while (1) {
         if (CPU_REFRESH_DELAY_IN_LOOP_COUNT % loop_counter) {
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
             int index = 0;
             has_information_changed = true;
             for (; index < sizeof(temperature_fan_ranges); ++index) {
-                if (temperature_fan_ranges[index].temperature < (uint8_t)temperature) {
+                if ((uint8_t)(temperature + 0.5)) < temperature_fan_ranges[index].temperature {
                     set_fan_speed(temperature_fan_ranges[index].speed);
                     break;
                 }
