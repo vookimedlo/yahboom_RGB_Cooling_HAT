@@ -67,7 +67,7 @@ void get_ip_address(char *output_value, size_t output_value_size) {
         }
         if_addrs = if_addrs->ifa_next;
     }
-    freeifaddrs(if_addrs);
+    //freeifaddrs(if_addrs);
 }
 
 void get_temperature(char *output_value, size_t output_value_size, double temperature) {
