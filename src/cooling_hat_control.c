@@ -12,7 +12,7 @@
 #define DISK_REFRESH_DELAY_IN_LOOP_COUNT 600 // a hour
 #define CPU_REFRESH_DELAY_IN_LOOP_COUNT 60 // a minute
 #define RAM_REFRESH_DELAY_IN_LOOP_COUNT 60 // a minute
-#define TEMP_REFRESH_DELAY_IN_LOOP_COUNT 1 // a second
+#define TEMP_REFRESH_DELAY_IN_LOOP_COUNT 5 // 5 seconds
 
 static struct oled_information information = {0};
 static unsigned int loop_counter = 0;
