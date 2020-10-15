@@ -73,6 +73,46 @@ void get_ip_address(char *output_value, size_t output_value_size) {
     }
 }
 
+void get_fan_speed(char *output_value, size_t output_value_size, enum fan_speed speed) {
+    char *text;
+    switch (speed) {
+        case fan_speed_0_percent:
+            text = "OFF";
+            break;
+        case fan_speed_100_percent:
+            text = "MAX";
+            break;
+        case fan_speed_20_percent:
+            text = "20%";
+            break;
+        case fan_speed_30_percent:
+            text = "30%";
+            break;
+        case fan_speed_40_percent:
+            text = "40%";
+            break;
+        case fan_speed_50_percent:
+            text = "50%";
+            break;
+        case fan_speed_60_percent:
+            text = "60%";
+            break;
+        case fan_speed_70_percent:
+            text = "70%";
+            break;
+        case fan_speed_80_percent:
+            text = "80%";
+            break;
+        case fan_speed_90_percent:
+            text = "90%";
+            break;
+        default:
+            text = "ERR";
+            break;
+    }
+    snprintf(output_value, output_value_size, "Fan:%s", text);
+}
+
 void get_temperature(char *output_value, size_t output_value_size, double temperature) {
     snprintf(output_value, output_value_size, "Temp:%.1fC", temperature);
 }
@@ -88,3 +128,5 @@ double get_temperature_double() {
     }
     return temperature;
 }
+
+

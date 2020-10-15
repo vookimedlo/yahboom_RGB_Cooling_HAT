@@ -50,8 +50,8 @@ int main(int argc, char *argv[]) {
 
     while (1) {
         if (CPU_REFRESH_DELAY_IN_LOOP_COUNT % loop_counter) {
-            get_average_load(information.m_cpu_load, sizeof(information.m_cpu_load));
-            DEBUG_PRINT("[APP] CPU load string `%s`", information.m_cpu_load);
+            get_average_load(information.m_average_load, sizeof(information.m_average_load));
+            DEBUG_PRINT("[APP] CPU load string `%s`", information.m_average_load);
             has_information_changed = true;
         }
         if (DISK_REFRESH_DELAY_IN_LOOP_COUNT % loop_counter) {
@@ -79,6 +79,8 @@ int main(int argc, char *argv[]) {
                                 temperature_fan_ranges[index].temperature,
                                 temperature_fan_ranges[index].speed);
                     set_fan_speed(temperature_fan_ranges[index].speed);
+                    get_fan_speed(information.m_fan_speed, sizeof(information.m_fan_speed), temperature_fan_ranges[index].speed);
+                    DEBUG_PRINT("[APP] Fan string `%s`", information.m_fan_speed);
                     break;
                 }
             }

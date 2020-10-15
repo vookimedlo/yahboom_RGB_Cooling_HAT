@@ -2,6 +2,7 @@
 #define COOLING_HAT_INFORMATION_H
 
 #include <stddef.h>
+#include "cooling_hat_fan.h"
 
 void get_average_load(char *output_value, size_t output_value_size);
 
@@ -10,6 +11,8 @@ void get_ram_usage(char *output_value, size_t output_value_size);
 void get_disk_usage(char *output_value, size_t output_value_size);
 
 void get_ip_address(char *output_value, size_t output_value_size);
+
+void get_fan_speed(char *output_value, size_t output_value_size, enum fan_speed speed);
 
 void get_temperature(char *output_value, size_t output_value_size, double temperature);
 

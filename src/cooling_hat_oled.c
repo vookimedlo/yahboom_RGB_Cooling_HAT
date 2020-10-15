@@ -17,9 +17,10 @@ void oled_refresh(const struct oled_information *values) {
     if (!values) return;
 
     // Draw all information
-    ssd1306_drawText(0, 0, values->m_cpu_load);
-    ssd1306_drawText(56, 0, values->m_cpu_temperature);
-    ssd1306_drawText(0, 8, values->m_ram_usage);
+    ssd1306_drawText(0, 0, values->m_cpu_temperature);
+    ssd1306_drawText(56, 0, values->m_fan_speed);
+    ssd1306_drawText(0, 8, values->m_average_load);
+    ssd1306_drawText(56, 8, values->m_ram_usage);
     ssd1306_drawText(0, 16, values->m_disk_usage);
     ssd1306_drawText(0, 24, values->m_network_address);
 
