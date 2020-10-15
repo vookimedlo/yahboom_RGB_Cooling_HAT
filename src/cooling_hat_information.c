@@ -1,5 +1,6 @@
 #include "cooling_hat_information.h"
 
+#include <linux/kernel.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -16,14 +17,14 @@
 
 #define TEMPERATURE_PATH "/sys/class/thermal/thermal_zone0/temp"
 
-void get_cpu_load(char *output_value, size_t output_value_size) {
+void get_average_load(char *output_value, size_t output_value_size) {
     struct sysinfo sys_info;
     if (sysinfo(&sys_info)) {
         *output_value = '\0';
         return;
     }
-    const unsigned long average_cpu_load = sys_info.loads[0] / 1000;
-    snprintf(output_value, output_value_size, "CPU:%ld%%", average_cpu_load);
+    const float average_cpu_load = sys_info.loads[0] / ((float)1<<SI_LOAD_SHIFT);
+    snprintf(output_value, output_value_size, "Load:.2f%%", average_cpu_load);
 }
 
 void get_ram_usage(char *output_value, size_t output_value_size) {
@@ -43,7 +44,7 @@ void get_disk_usage(char *output_value, size_t output_value_size) {
     const unsigned long long total_blocks = disk_info.f_bsize;
     const unsigned long long total_size = total_blocks * disk_info.f_blocks;
     const unsigned long long free_disk = disk_info.f_bfree * total_blocks;
-    snprintf(output_value, output_value_size, "Disk:%d%%", (int)(free_disk / total_size));
+    snprintf(output_value, output_value_size, "Disk:%d%%", (int)((free_disk >> 20) / (double)(total_size >> 20)));
 }
 
 void get_ip_address(char *output_value, size_t output_value_size) {

@@ -2,7 +2,7 @@
 #include "cooling_hat_i2c.h"
 #include "cooling_hat_utils.h"
 
-static enum fan_speed last_fan_speed = fan_speed_0_percent;
+static enum fan_speed last_fan_speed = -1;
 
 void set_fan_speed(enum fan_speed value) {
     if (last_fan_speed == value)

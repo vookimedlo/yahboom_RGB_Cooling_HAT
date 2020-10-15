@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 
-void get_cpu_load(char *output_value, size_t output_value_size);
+void get_average_load(char *output_value, size_t output_value_size);
 
 void get_ram_usage(char *output_value, size_t output_value_size);
 

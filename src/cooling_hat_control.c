@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
 
     DEBUG_PRINT("[APP] Initialization");
     oled_initialization();
-    set_fan_speed(fan_speed_100_percent);
+    set_fan_speed(fan_speed_0_percent);
     rgb_off();
     usleep(BASIC_DELAY_IN_MS);
     DEBUG_PRINT("[APP] Initialization is over");
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
 
     while (1) {
         if (CPU_REFRESH_DELAY_IN_LOOP_COUNT % loop_counter) {
-            get_cpu_load(information.m_cpu_load, sizeof(information.m_cpu_load));
+            get_average_load(information.m_cpu_load, sizeof(information.m_cpu_load));
             DEBUG_PRINT("[APP] CPU load string `%s`", information.m_cpu_load);
             has_information_changed = true;
         }
