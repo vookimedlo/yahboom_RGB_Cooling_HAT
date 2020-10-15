@@ -36,7 +36,7 @@ All text above, and the splash screen below must be included in any redistributi
 #define true 1
 #define false 0
 
-#define rotation 0
+#define rotation 2 // 180 degrees
 
 #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
 
