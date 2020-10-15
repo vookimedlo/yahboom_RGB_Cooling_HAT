@@ -25,8 +25,7 @@ struct temperature_fan_range {
 };
 
 struct temperature_fan_range temperature_fan_ranges[] = {
-        {.temperature = 40, .speed = fan_speed_0_percent},
-        {.temperature = 45, .speed = fan_speed_40_percent},
+        {.temperature = 45, .speed = fan_speed_0_percent},
         {.temperature = 50, .speed = fan_speed_40_percent},
         {.temperature = 60, .speed = fan_speed_60_percent},
         {.temperature = 70, .speed = fan_speed_80_percent},

@@ -18,7 +18,7 @@
 
 void get_cpu_load(char *output_value, size_t output_value_size) {
     struct sysinfo sys_info;
-    if (!sysinfo(&sys_info)) {
+    if (sysinfo(&sys_info)) {
         *output_value = '\0';
         return;
     }
@@ -28,7 +28,7 @@ void get_cpu_load(char *output_value, size_t output_value_size) {
 
 void get_ram_usage(char *output_value, size_t output_value_size) {
     struct sysinfo sys_info;
-    if (!sysinfo(&sys_info)) {
+    if (sysinfo(&sys_info)) {
         *output_value = '\0';
         return;
     }
@@ -43,7 +43,7 @@ void get_disk_usage(char *output_value, size_t output_value_size) {
     const unsigned long long total_blocks = disk_info.f_bsize;
     const unsigned long long total_size = total_blocks * disk_info.f_blocks;
     const unsigned long long free_disk = disk_info.f_bfree * total_blocks;
-    snprintf(output_value, output_value_size, "Disk:%ld/%ldMB", free_disk >> 20, total_size >> 20);
+    snprintf(output_value, output_value_size, "Disk:%d%%", (int)(free_disk / total_size));
 }
 
 void get_ip_address(char *output_value, size_t output_value_size) {
