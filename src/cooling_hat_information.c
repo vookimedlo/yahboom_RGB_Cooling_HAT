@@ -24,7 +24,7 @@ void get_average_load(char *output_value, size_t output_value_size) {
         return;
     }
     const float average_cpu_load = sys_info.loads[0] / ((float)(1<<SI_LOAD_SHIFT));
-    snprintf(output_value, output_value_size, "Load:%.2f", average_cpu_load);
+    snprintf(output_value, output_value_size, "LA:%.2f", average_cpu_load);
 }
 
 void get_ram_usage(char *output_value, size_t output_value_size) {
