@@ -5,8 +5,8 @@
     #define DEBUG_PRINT(...)
 #else
     #include <stdio.h>
-    #define DEBUG_PRINT(...) \
-        do { } while(fprintf(stderr, __VA_ARGS__))
+    #define DEBUG_PRINT(FORMAT, ...) \
+        do { fprintf(stderr, "%s\n", FORMAT, __VA_ARGS__); } while(0)
 #endif // DEBUG
 
 #endif //COOLING_UTILS_H
