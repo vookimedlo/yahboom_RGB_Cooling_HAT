@@ -49,22 +49,22 @@ int main(int argc, char *argv[]) {
     get_ip_address(information.m_network_address, sizeof(information.m_network_address));
 
     while (1) {
-        if (CPU_REFRESH_DELAY_IN_LOOP_COUNT % loop_counter) {
+        if (CPU_REFRESH_DELAY_IN_LOOP_COUNT % loop_counter == 0) {
             get_average_load(information.m_average_load, sizeof(information.m_average_load));
             DEBUG_PRINT("[APP] CPU load string `%s`", information.m_average_load);
             has_information_changed = true;
         }
-        if (DISK_REFRESH_DELAY_IN_LOOP_COUNT % loop_counter) {
+        if (DISK_REFRESH_DELAY_IN_LOOP_COUNT % loop_counter == 0) {
             get_disk_usage(information.m_disk_usage, sizeof(information.m_disk_usage));
             DEBUG_PRINT("[APP] Disk usage string `%s`", information.m_disk_usage);
             has_information_changed = true;
         }
-        if (RAM_REFRESH_DELAY_IN_LOOP_COUNT % loop_counter) {
+        if (RAM_REFRESH_DELAY_IN_LOOP_COUNT % loop_counter == 0) {
             get_ram_usage(information.m_ram_usage, sizeof(information.m_ram_usage));
             DEBUG_PRINT("[APP] RAM usage string `%s`", information.m_ram_usage);
             has_information_changed = true;
         }
-        if (TEMP_REFRESH_DELAY_IN_LOOP_COUNT % loop_counter) {
+        if (TEMP_REFRESH_DELAY_IN_LOOP_COUNT % loop_counter == 0) {
             temperature = get_temperature_double();
             get_temperature(information.m_cpu_temperature, sizeof(information.m_cpu_temperature), temperature);
             DEBUG_PRINT("[APP] Temperature string `%s`", information.m_cpu_temperature);
