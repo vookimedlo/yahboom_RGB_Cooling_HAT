@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     oled_initialization();
     set_fan_speed(fan_speed_0_percent);
     rgb_off();
-    usleep(BASIC_DELAY_IN_SECONDS);
+    sleep(BASIC_DELAY_IN_SECONDS);
     DEBUG_PRINT("[APP] Initialization is over");
 
     // The IPv4 address will be retrieved only once.
