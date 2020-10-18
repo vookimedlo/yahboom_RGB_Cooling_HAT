@@ -8,11 +8,11 @@
 #include "cooling_hat_rgb.h"
 #include "cooling_hat_utils.h"
 
-#define BASIC_DELAY_IN_MS 1000
+#define BASIC_DELAY_IN_SECONDS 1
 #define DISK_REFRESH_DELAY_IN_LOOP_COUNT 600 // a hour
 #define CPU_REFRESH_DELAY_IN_LOOP_COUNT 60 // a minute
 #define RAM_REFRESH_DELAY_IN_LOOP_COUNT 60 // a minute
-#define TEMP_REFRESH_DELAY_IN_LOOP_COUNT 5 // 5 seconds
+#define TEMP_REFRESH_DELAY_IN_LOOP_COUNT 8 // 8 seconds
 
 static struct oled_information information = {0};
 static unsigned int loop_counter = 0;
@@ -42,29 +42,29 @@ int main(int argc, char *argv[]) {
     oled_initialization();
     set_fan_speed(fan_speed_0_percent);
     rgb_off();
-    usleep(BASIC_DELAY_IN_MS);
+    usleep(BASIC_DELAY_IN_SECONDS);
     DEBUG_PRINT("[APP] Initialization is over");
 
     // The IPv4 address will be retrieved only once.
     get_ip_address(information.m_network_address, sizeof(information.m_network_address));
 
     while (1) {
-        if (CPU_REFRESH_DELAY_IN_LOOP_COUNT % loop_counter == 0) {
+        if (loop_counter % CPU_REFRESH_DELAY_IN_LOOP_COUNT == 0) {
             get_average_load(information.m_average_load, sizeof(information.m_average_load));
             DEBUG_PRINT("[APP] CPU load string `%s`", information.m_average_load);
             has_information_changed = true;
         }
-        if (DISK_REFRESH_DELAY_IN_LOOP_COUNT % loop_counter == 0) {
+        if (loop_counter % DISK_REFRESH_DELAY_IN_LOOP_COUNT == 0) {
             get_disk_usage(information.m_disk_usage, sizeof(information.m_disk_usage));
             DEBUG_PRINT("[APP] Disk usage string `%s`", information.m_disk_usage);
             has_information_changed = true;
         }
-        if (RAM_REFRESH_DELAY_IN_LOOP_COUNT % loop_counter == 0) {
+        if (loop_counter % RAM_REFRESH_DELAY_IN_LOOP_COUNT == 0) {
             get_ram_usage(information.m_ram_usage, sizeof(information.m_ram_usage));
             DEBUG_PRINT("[APP] RAM usage string `%s`", information.m_ram_usage);
             has_information_changed = true;
         }
-        if (TEMP_REFRESH_DELAY_IN_LOOP_COUNT % loop_counter == 0) {
+        if (loop_counter % TEMP_REFRESH_DELAY_IN_LOOP_COUNT == 0) {
             temperature = get_temperature_double();
             get_temperature(information.m_cpu_temperature, sizeof(information.m_cpu_temperature), temperature);
             DEBUG_PRINT("[APP] Temperature string `%s`", information.m_cpu_temperature);
@@ -74,12 +74,13 @@ int main(int argc, char *argv[]) {
             int index = 0;
             has_information_changed = true;
             for (; index < sizeof(temperature_fan_ranges); ++index) {
-                if ((uint8_t)(temperature + 0.5) < temperature_fan_ranges[index].temperature) {
+                if ((uint8_t) (temperature + 0.5) < temperature_fan_ranges[index].temperature) {
                     DEBUG_PRINT("[APP] Temperature threshold found %uC, fan speed %u",
                                 temperature_fan_ranges[index].temperature,
                                 temperature_fan_ranges[index].speed);
                     set_fan_speed(temperature_fan_ranges[index].speed);
-                    get_fan_speed(information.m_fan_speed, sizeof(information.m_fan_speed), temperature_fan_ranges[index].speed);
+                    get_fan_speed(information.m_fan_speed, sizeof(information.m_fan_speed),
+                                  temperature_fan_ranges[index].speed);
                     DEBUG_PRINT("[APP] Fan string `%s`", information.m_fan_speed);
                     break;
                 }
@@ -94,7 +95,7 @@ int main(int argc, char *argv[]) {
         }
 
         ++loop_counter;
-        usleep(BASIC_DELAY_IN_MS);
+        sleep(BASIC_DELAY_IN_SECONDS);
     }
 
     return 0;
