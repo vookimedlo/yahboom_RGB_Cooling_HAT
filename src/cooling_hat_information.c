@@ -55,7 +55,7 @@ void get_average_load(char *output_value, size_t output_value_size) {
         *output_value = '\0';
         return;
     }
-    const float average_cpu_load = sys_info.loads[0] / ((float)(1<<SI_LOAD_SHIFT));
+    const float average_cpu_load = sys_info.loads[0] / ((float) (1 << SI_LOAD_SHIFT));
     snprintf(output_value, output_value_size, "LA:%.2f", average_cpu_load);
 }
 
@@ -67,7 +67,7 @@ void get_ram_usage(char *output_value, size_t output_value_size) {
     }
     const unsigned long total_ram = sys_info.totalram >> 20;
     const unsigned long free_ram = sys_info.freeram >> 20;
-    snprintf(output_value, output_value_size, "RAM:%.2f%%", free_ram / (double)total_ram);
+    snprintf(output_value, output_value_size, "RAM:%.2f%%", free_ram / (double) total_ram);
 }
 
 void get_disk_usage(char *output_value, size_t output_value_size) {
@@ -76,7 +76,7 @@ void get_disk_usage(char *output_value, size_t output_value_size) {
     const unsigned long long total_blocks = disk_info.f_bsize;
     const unsigned long long total_size = total_blocks * disk_info.f_blocks;
     const unsigned long long free_disk = disk_info.f_bfree * total_blocks;
-    snprintf(output_value, output_value_size, "HDD:%.2f%%", (free_disk >> 20) / (double)(total_size >> 20));
+    snprintf(output_value, output_value_size, "HDD:%.2f%%", (free_disk >> 20) / (double) (total_size >> 20));
 }
 
 void get_ip_address(char *output_value, size_t output_value_size) {

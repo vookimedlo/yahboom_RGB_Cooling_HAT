@@ -67,6 +67,7 @@ struct temperature_fan_range temperature_fan_ranges[] = {
 };
 
 volatile bool shall_run = true;
+
 void sigterm_handler() {
     shall_run = false;
 };
@@ -144,6 +145,6 @@ int main(int argc, char *argv[]) {
     oled_clear();
     set_fan_speed(fan_speed_0_percent);
     rgb_off();
-    
+
     return 0;
 }

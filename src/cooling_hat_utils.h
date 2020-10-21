@@ -43,6 +43,7 @@ extern bool hasTTY;
 #else
 
 #include <stdio.h>
+
 #define DEBUG_PRINT(FORMAT, ...)                                         \
         do {                                                             \
             if (hasTTY)                                                  \

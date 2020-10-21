@@ -42,8 +42,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #define DEV_NULL "/dev/null"
 
-void daemonize()
-{
+void daemonize() {
     pid_t pid = fork();
 
     if (pid > 0)
@@ -78,9 +77,9 @@ void daemonize()
     hasTTY = false;
 
     for (int i = sysconf(_SC_OPEN_MAX); i >= 0; --i)
-        close (i);
+        close(i);
 
-    stdin=fopen(DEV_NULL,"r");    //fd=0
-    stdout=fopen(DEV_NULL,"w+");  //fd=1
-    stderr=fopen(DEV_NULL,"w+");  //fd=2
+    stdin = fopen(DEV_NULL, "r");    //fd=0
+    stdout = fopen(DEV_NULL, "w+");  //fd=1
+    stderr = fopen(DEV_NULL, "w+");  //fd=2
 }
