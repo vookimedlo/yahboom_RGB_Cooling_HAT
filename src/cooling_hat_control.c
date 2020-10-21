@@ -141,8 +141,9 @@ int main(int argc, char *argv[]) {
     }
 
     DEBUG_PRINT("[APP] Terminating ...");
+    oled_clear();
     set_fan_speed(fan_speed_0_percent);
     rgb_off();
-
+    
     return 0;
 }
