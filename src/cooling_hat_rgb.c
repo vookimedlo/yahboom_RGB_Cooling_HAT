@@ -32,6 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "cooling_hat_rgb.h"
 #include "cooling_hat_i2c.h"
+#include "cooling_hat_utils.h"
 
 void set_rgb(enum rgb_light light, uint8_t value) {
     i2c_write(i2c_rgb_light_register, light);
@@ -41,5 +42,6 @@ void set_rgb(enum rgb_light light, uint8_t value) {
 }
 
 void rgb_off() {
+    DEBUG_PRINT("[RGB] Off");
     i2c_write(i2c_rgb_register, 0);
 }

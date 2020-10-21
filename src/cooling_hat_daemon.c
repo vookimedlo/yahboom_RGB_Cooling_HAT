@@ -30,35 +30,57 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef COOLING_UTILS_H
-#define COOLING_UTILS_H
-
-#include <stdbool.h>
-#include <syslog.h>
-
-extern bool hasTTY;
-
-#if defined(NDEBUG)
-#define DEBUG_PRINT(...)
-#else
-
+#include "cooling_hat_daemon.h"
 #include <stdio.h>
-#define DEBUG_PRINT(FORMAT, ...)                                         \
-        do {                                                             \
-            if (hasTTY)                                                  \
-                fprintf(stderr, FORMAT "\n" __VA_OPT__(,)  __VA_ARGS__); \
-            else                                                         \
-                syslog(LOG_DEBUG, FORMAT __VA_OPT__(,)  __VA_ARGS__);    \
-        } while(0)
-#endif // DEBUG
+#include <stdlib.h>
+#include <unistd.h>
+#include <signal.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <syslog.h>
+#include "cooling_hat_utils.h"
 
-#define PRINT(FORMAT, ...)                                               \
-        do {                                                             \
-            if (hasTTY)                                                  \
-                fprintf(stderr, FORMAT "\n" __VA_OPT__(,)  __VA_ARGS__); \
-            else                                                         \
-                syslog(LOG_INFO, FORMAT __VA_OPT__(,)  __VA_ARGS__);     \
-        } while(0)
+#define DEV_NULL "/dev/null"
 
+void daemonize()
+{
+    pid_t pid = fork();
 
-#endif //COOLING_UTILS_H
+    if (pid > 0)
+        exit(EXIT_SUCCESS);
+
+    if (pid < 0) {
+        PRINT("Cannot create a daemon");
+        exit(EXIT_FAILURE);
+    }
+
+    if (setsid() < 0) {
+        PRINT("Cannot become a session leader");
+        exit(EXIT_FAILURE);
+    }
+
+    signal(SIGCHLD, SIG_IGN);
+    signal(SIGHUP, SIG_IGN);
+
+    pid = fork();
+
+    if (pid > 0)
+        exit(EXIT_SUCCESS);
+
+    if (pid < 0) {
+        PRINT("Cannot create a daemon");
+        exit(EXIT_FAILURE);
+    }
+
+    umask(0);
+    chdir("/");
+
+    hasTTY = false;
+
+    for (int i = sysconf(_SC_OPEN_MAX); i >= 0; --i)
+        close (i);
+
+    stdin=fopen(DEV_NULL,"r");    //fd=0
+    stdout=fopen(DEV_NULL,"w+");  //fd=1
+    stderr=fopen(DEV_NULL,"w+");  //fd=2
+}

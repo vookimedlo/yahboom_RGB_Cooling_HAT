@@ -30,9 +30,11 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <signal.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <unistd.h>
+#include "cooling_hat_daemon.h"
 #include "cooling_hat_fan.h"
 #include "cooling_hat_i2c.h"
 #include "cooling_hat_information.h"
@@ -64,7 +66,15 @@ struct temperature_fan_range temperature_fan_ranges[] = {
         {.temperature = 255, .speed = fan_speed_100_percent},
 };
 
+volatile bool shall_run = true;
+void sigterm_handler() {
+    shall_run = false;
+};
+
 int main(int argc, char *argv[]) {
+
+    daemonize();
+    signal(SIGTERM, sigterm_handler);
 
     if (!i2c_init()) {
         return -1;
@@ -80,7 +90,7 @@ int main(int argc, char *argv[]) {
     // The IPv4 address will be retrieved only once.
     get_ip_address(information.m_network_address, sizeof(information.m_network_address));
 
-    while (1) {
+    while (shall_run) {
         if (loop_counter % CPU_REFRESH_DELAY_IN_LOOP_COUNT == 0) {
             get_average_load(information.m_average_load, sizeof(information.m_average_load));
             DEBUG_PRINT("[APP] CPU load string `%s`", information.m_average_load);
@@ -129,6 +139,10 @@ int main(int argc, char *argv[]) {
         ++loop_counter;
         sleep(BASIC_DELAY_IN_SECONDS);
     }
+
+    DEBUG_PRINT("[APP] Terminating ...");
+    set_fan_speed(fan_speed_0_percent);
+    rgb_off();
 
     return 0;
 }

@@ -30,35 +30,9 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef COOLING_UTILS_H
-#define COOLING_UTILS_H
+#ifndef COOLING_HAT_DAEMON_H
+#define COOLING_HAT_DAEMON_H
 
-#include <stdbool.h>
-#include <syslog.h>
+void daemonize();
 
-extern bool hasTTY;
-
-#if defined(NDEBUG)
-#define DEBUG_PRINT(...)
-#else
-
-#include <stdio.h>
-#define DEBUG_PRINT(FORMAT, ...)                                         \
-        do {                                                             \
-            if (hasTTY)                                                  \
-                fprintf(stderr, FORMAT "\n" __VA_OPT__(,)  __VA_ARGS__); \
-            else                                                         \
-                syslog(LOG_DEBUG, FORMAT __VA_OPT__(,)  __VA_ARGS__);    \
-        } while(0)
-#endif // DEBUG
-
-#define PRINT(FORMAT, ...)                                               \
-        do {                                                             \
-            if (hasTTY)                                                  \
-                fprintf(stderr, FORMAT "\n" __VA_OPT__(,)  __VA_ARGS__); \
-            else                                                         \
-                syslog(LOG_INFO, FORMAT __VA_OPT__(,)  __VA_ARGS__);     \
-        } while(0)
-
-
-#endif //COOLING_UTILS_H
+#endif //COOLING_HAT_DAEMON_H
