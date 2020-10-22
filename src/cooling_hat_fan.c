@@ -30,6 +30,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <unistd.h>
 #include "cooling_hat_fan.h"
 #include "cooling_hat_i2c.h"
 #include "cooling_hat_utils.h"
@@ -39,6 +40,14 @@ static enum fan_speed last_fan_speed = -1;
 void set_fan_speed(enum fan_speed value) {
     if (last_fan_speed == value)
         return;
+
+    if (last_fan_speed == fan_speed_0_percent && value == fan_speed_20_percent) {
+        // There wa an observation that fan is not able to start circulating from the OFF state to the low 20% speed.
+        // Therefore lets help it with the initial 40% speed.
+        DEBUG_PRINT("[I2C] Speeding fan to a higher speed from the OFF state");
+        i2c_write(i2c_fan_register, fan_speed_40_percent);
+        sleep(2);
+    }
 
     last_fan_speed = value;
 
