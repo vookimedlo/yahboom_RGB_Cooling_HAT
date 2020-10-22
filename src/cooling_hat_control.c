@@ -33,10 +33,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <signal.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <unistd.h>
+#include "cooling_hat_arguments.h"
 #include "cooling_hat_daemon.h"
 #include "cooling_hat_fan.h"
-#include "cooling_hat_i2c.h"
 #include "cooling_hat_information.h"
 #include "cooling_hat_oled.h"
 #include "cooling_hat_rgb.h"
@@ -73,18 +74,12 @@ void sigterm_handler() {
 };
 
 int main(int argc, char *argv[]) {
-
-    daemonize();
+    handle_arguments(argc, argv);
     signal(SIGTERM, sigterm_handler);
-
-    if (!i2c_init()) {
-        return -1;
-    }
 
     DEBUG_PRINT("[APP] Initialization");
     oled_initialization();
     set_fan_speed(fan_speed_0_percent);
-    rgb_off();
     sleep(BASIC_DELAY_IN_SECONDS);
     DEBUG_PRINT("[APP] Initialization is over");
 
@@ -114,7 +109,7 @@ int main(int argc, char *argv[]) {
         }
 
         if (previous_temperature != temperature) {
-            int index = 0;
+            size_t index = 0;
             has_information_changed = true;
             for (; index < sizeof(temperature_fan_ranges); ++index) {
                 if ((uint8_t) (temperature + 0.5) < temperature_fan_ranges[index].temperature) {

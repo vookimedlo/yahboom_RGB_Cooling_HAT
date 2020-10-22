@@ -30,19 +30,9 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "cooling_hat_rgb.h"
-#include "cooling_hat_i2c.h"
-#include "cooling_hat_utils.h"
+#ifndef COOLING_HAT_ARGUMENTS_H
+#define COOLING_HAT_ARGUMENTS_H
 
-void set_rgb(enum rgb_light light, uint8_t red, uint8_t green, uint8_t blue) {
-    DEBUG_PRINT("[RGB] #%u -> red: %u, green: %u, blue %u", light, red, green, blue);
-    i2c_write(i2c_rgb_light_register, light);
-    i2c_write(i2c_red_register, red);
-    i2c_write(i2c_green_register, green);
-    i2c_write(i2c_blue_register, blue);
-}
+void handle_arguments(int argc, char *argv[]);
 
-void rgb_off() {
-    DEBUG_PRINT("[RGB] Off");
-    i2c_write(i2c_rgb_register, 0);
-}
+#endif //COOLING_HAT_ARGUMENTS_H

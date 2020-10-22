@@ -42,7 +42,7 @@ enum rgb_light {
     rgb_all_lights = 3,
 };
 
-void set_rgb(enum rgb_light light, uint8_t value);
+void set_rgb(enum rgb_light light, uint8_t red, uint8_t green, uint8_t blue);
 
 void rgb_off();
 

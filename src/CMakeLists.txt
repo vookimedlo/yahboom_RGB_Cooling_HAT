@@ -43,13 +43,16 @@ SET(CMAKE_C_FLAGS "-Wall -Wextra ${CMAKE_C_FLAGS}")
 SET(CMAKE_C_FLAGS_RELEASE "-O3 ${CMAKE_C_FLAGS}")
 
 SET(SOURCES
+        cooling_hat_arguments.c
         cooling_hat_control.c
+        cooling_hat_daemon.c
         cooling_hat_fan.c
         cooling_hat_i2c.c
         cooling_hat_information.c
         cooling_hat_oled.c
         cooling_hat_rgb.c
-        ssd1306_i2c.c cooling_hat_daemon.c cooling_hat_daemon.h cooling_hat_utils.c)
+        cooling_hat_utils.c
+        ssd1306_i2c.c)
 
 ADD_EXECUTABLE(cooling_hat
         ${SOURCES} cooling_hat_utils.c)
