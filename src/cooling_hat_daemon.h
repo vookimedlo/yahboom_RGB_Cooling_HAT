@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef COOLING_HAT_DAEMON_H
 #define COOLING_HAT_DAEMON_H
 
+/// Daemonizes this application.
 void daemonize();
 
 #endif //COOLING_HAT_DAEMON_H

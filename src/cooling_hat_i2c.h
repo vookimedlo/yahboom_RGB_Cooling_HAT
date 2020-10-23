@@ -46,8 +46,13 @@ enum i2c_register {
     i2c_fan_register = 0x08,
 };
 
+/// Initializes I2C.
+/// @returns true on success; false otherwise.
 bool i2c_init();
 
+/// Send data over I2C.
+/// req The I2C register.
+/// data The data that shall be sent over the I2C.
 void i2c_write(enum i2c_register reg, uint8_t data);
 
 #endif //COOLING_HAT_I2C_H

@@ -33,19 +33,24 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef COOLING_HAT_OLED_H
 #define COOLING_HAT_OLED_H
 
+/// Information that shall be displayed on the OLED panel.
 struct oled_information {
-    char m_average_load[15];
-    char m_cpu_temperature[15];
-    char m_ram_usage[15];
-    char m_disk_usage[15];
-    char m_network_address[30];
-    char m_fan_speed[15];
+    char m_average_load[15];     ///< The average load - 1 minute range.
+    char m_cpu_temperature[15];  ///< The CPU temperature in Celsius.
+    char m_ram_usage[15];        ///< The RAM usage in percents.
+    char m_disk_usage[15];       ///< The disk usage in percents -  the mounted '/'.
+    char m_network_address[30];  ///< The network IPv4.
+    char m_fan_speed[15];        ///< The fan speed in percents.
 };
 
+/// Initializes the OLED panel.
 void oled_initialization();
 
+/// Clears the whole OLED panel.
 void oled_clear();
 
+/// Refreshes OLED panel with the given information.
+/// @param values The information for displaying.
 void oled_refresh(const struct oled_information *values);
 
 #endif //COOLING_HAT_OLED_H

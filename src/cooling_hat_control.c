@@ -100,9 +100,9 @@ int main(int argc, char *argv[]) {
             has_information_changed = true;
             for (; index < sizeof(temperature_fan_ranges); ++index) {
                 if ((uint8_t) (temperature + 0.5) < temperature_fan_ranges[index].temperature) {
-                    DEBUG_PRINT("[APP] Temperature threshold found %uC, fan speed %u",
-                                temperature_fan_ranges[index].temperature,
-                                temperature_fan_ranges[index].speed);
+                    PRINT("[APP] Temperature threshold found %uC, fan speed %u",
+                          temperature_fan_ranges[index].temperature,
+                          temperature_fan_ranges[index].speed);
                     set_fan_speed(temperature_fan_ranges[index].speed);
                     get_fan_speed(information.m_fan_speed, sizeof(information.m_fan_speed),
                                   temperature_fan_ranges[index].speed);
@@ -123,7 +123,7 @@ int main(int argc, char *argv[]) {
         sleep(BASIC_DELAY_IN_SECONDS);
     }
 
-    DEBUG_PRINT("[APP] Terminating ...");
+    PRINT("[APP] Terminating ...");
     oled_clear();
     set_fan_speed(fan_speed_0_percent);
     rgb_off();

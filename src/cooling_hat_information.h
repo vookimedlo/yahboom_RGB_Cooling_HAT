@@ -36,18 +36,41 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stddef.h>
 #include "cooling_hat_fan.h"
 
+/// Provides the information about the current average load that shall be displayed on the OLED panel.
+/// @param output_value The memory that shall store the information.
+/// @param output_value_size The size of the @see output_value.
+/// @remark 1 minute average interval is used for this operation.
 void get_average_load(char *output_value, size_t output_value_size);
 
+/// Provides the information about the current RAM usage that shall be displayed on the OLED panel.
+/// @param output_value The memory that shall store the information.
+/// @param output_value_size The size of the @see output_value.
 void get_ram_usage(char *output_value, size_t output_value_size);
 
+/// Provides the information about the disk usage that shall be displayed on the OLED panel.
+/// @param output_value The memory that shall store the information.
+/// @param output_value_size The size of the @see output_value.
+/// @remark The mounted '/' is used for this operation.
 void get_disk_usage(char *output_value, size_t output_value_size);
 
+/// Provides the information about the current IPv4 that shall be displayed on the OLED panel.
+/// @param output_value The memory that shall store the information.
+/// @param output_value_size The size of the @see output_value.
 void get_ip_address(char *output_value, size_t output_value_size);
 
+/// Provides the information about the current fan speed that shall be displayed on the OLED panel.
+/// @param output_value The memory that shall store the information.
+/// @param output_value_size The size of the @see output_value.
 void get_fan_speed(char *output_value, size_t output_value_size, enum fan_speed speed);
 
+/// Provides the information that shall be displayed on the OLED panel.
+/// @param output_value The memory that shall store the information.
+/// @param output_value_size The size of the @see output_value.
+/// @param temperature The temperature that shall be shown on the OLED panel.
 void get_temperature(char *output_value, size_t output_value_size, double temperature);
 
+/// Provides the CPU temperature.
+/// @returns The CPU temperature.
 double get_temperature_double();
 
 #endif //COOLING_HAT_INFORMATION_H

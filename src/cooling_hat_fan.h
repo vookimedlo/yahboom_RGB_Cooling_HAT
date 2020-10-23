@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef COOLING_HAT_FAN_H
 #define COOLING_HAT_FAN_H
 
+/// Supported fan speeds.
 enum fan_speed {
     fan_speed_0_percent,
     fan_speed_100_percent,
@@ -46,6 +47,8 @@ enum fan_speed {
     fan_speed_90_percent,
 };
 
+/// Sets the fan speed.
+/// @param value The fan speed.
 void set_fan_speed(enum fan_speed value);
 
 #endif //COOLING_HAT_FAN_H

@@ -35,6 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdint.h>
 
+/// LEDs.
 enum rgb_light {
     rgb_1_light = 0,
     rgb_2_light = 1,
@@ -42,8 +43,14 @@ enum rgb_light {
     rgb_all_lights = 3,
 };
 
+/// Sets the LED by the given RGB values.
+/// @param light The intended LED that shall be changed.
+/// @param red The red value.
+/// @param green The green value.
+/// @param blue The blue value.
 void set_rgb(enum rgb_light light, uint8_t red, uint8_t green, uint8_t blue);
 
+/// Turns all LEDs off.
 void rgb_off();
 
 #endif //COOLING_HAT_RGB_H

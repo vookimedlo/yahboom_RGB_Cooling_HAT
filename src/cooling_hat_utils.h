@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stdbool.h>
 #include <syslog.h>
 
-extern bool hasTTY;
+extern bool has_tty;
 
 #if defined(NDEBUG)
 #define DEBUG_PRINT(...)
@@ -46,7 +46,7 @@ extern bool hasTTY;
 
 #define DEBUG_PRINT(FORMAT, ...)                                         \
         do {                                                             \
-            if (hasTTY)                                                  \
+            if (has_tty)                                                  \
                 fprintf(stderr, FORMAT "\n" __VA_OPT__(,)  __VA_ARGS__); \
             else                                                         \
                 syslog(LOG_DEBUG, FORMAT __VA_OPT__(,)  __VA_ARGS__);    \
@@ -55,7 +55,7 @@ extern bool hasTTY;
 
 #define PRINT(FORMAT, ...)                                               \
         do {                                                             \
-            if (hasTTY)                                                  \
+            if (has_tty)                                                  \
                 fprintf(stderr, FORMAT "\n" __VA_OPT__(,)  __VA_ARGS__); \
             else                                                         \
                 syslog(LOG_INFO, FORMAT __VA_OPT__(,)  __VA_ARGS__);     \

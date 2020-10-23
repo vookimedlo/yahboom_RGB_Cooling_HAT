@@ -74,7 +74,7 @@ void daemonize() {
     umask(0);
     chdir("/");
 
-    hasTTY = false;
+    has_tty = false;
 
     for (int i = sysconf(_SC_OPEN_MAX); i >= 0; --i)
         close(i);

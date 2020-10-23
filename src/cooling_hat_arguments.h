@@ -36,13 +36,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stdint.h>
 #include "cooling_hat_fan.h"
 
+/// Range for the fan speed regulation according to the temperature.
 struct temperature_fan_range {
     uint8_t temperature;
     enum fan_speed speed;
 };
 
+/// Ranges for the fan speed regulation according to the temperature.
 extern struct temperature_fan_range temperature_fan_ranges[10];
 
+/// Parses the program arguments and invokes desired operations.
 void handle_arguments(int argc, char *argv[]);
 
 #endif //COOLING_HAT_ARGUMENTS_H
