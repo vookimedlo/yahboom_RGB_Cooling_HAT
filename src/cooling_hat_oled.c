@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "cooling_hat_oled.h"
-#include "ssd1306_i2c.h"
+#include "3rd_party_code/ssd1306_i2c.h"
 
 void oled_initialization() {
     ssd1306_begin(SSD1306_SWITCHCAPVCC, SSD1306_I2C_ADDRESS);

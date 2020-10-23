@@ -39,7 +39,7 @@ SET(CMAKE_C_EXTENSIONS OFF)
 
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-SET(CMAKE_C_FLAGS "-Wall -Wextra ${CMAKE_C_FLAGS}")
+SET(CMAKE_C_FLAGS "-Wall -Wextra -I 3rd_party_code ${CMAKE_C_FLAGS}")
 SET(CMAKE_C_FLAGS_RELEASE "-O3 ${CMAKE_C_FLAGS}")
 
 SET(SOURCES
@@ -52,7 +52,7 @@ SET(SOURCES
         cooling_hat_oled.c
         cooling_hat_rgb.c
         cooling_hat_utils.c
-        ssd1306_i2c.c)
+        3rd_party_code/ssd1306_i2c.c)
 
 ADD_EXECUTABLE(cooling_hat
         ${SOURCES} cooling_hat_utils.c)
