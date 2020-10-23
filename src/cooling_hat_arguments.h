@@ -33,6 +33,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef COOLING_HAT_ARGUMENTS_H
 #define COOLING_HAT_ARGUMENTS_H
 
+#include <stdint.h>
+#include "cooling_hat_fan.h"
+
+struct temperature_fan_range {
+    uint8_t temperature;
+    enum fan_speed speed;
+};
+
+extern struct temperature_fan_range temperature_fan_ranges[10];
+
 void handle_arguments(int argc, char *argv[]);
 
 #endif //COOLING_HAT_ARGUMENTS_H

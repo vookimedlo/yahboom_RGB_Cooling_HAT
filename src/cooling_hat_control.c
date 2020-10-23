@@ -54,19 +54,6 @@ static unsigned int loop_counter = 0;
 static double previous_temperature = 0, temperature = 0;
 static bool has_information_changed = false;
 
-struct temperature_fan_range {
-    uint8_t temperature;
-    enum fan_speed speed;
-};
-
-struct temperature_fan_range temperature_fan_ranges[] = {
-        {.temperature = 45, .speed = fan_speed_0_percent},
-        {.temperature = 50, .speed = fan_speed_40_percent},
-        {.temperature = 60, .speed = fan_speed_60_percent},
-        {.temperature = 70, .speed = fan_speed_80_percent},
-        {.temperature = 255, .speed = fan_speed_100_percent},
-};
-
 volatile bool shall_run = true;
 
 void sigterm_handler() {
