@@ -30,31 +30,40 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef COOLING_HAT_I2C_H
-#define COOLING_HAT_I2C_H
+#ifndef COOLING_HAT_RGB_EFFECT_H
+#define COOLING_HAT_RGB_EFFECT_H
 
-#include <stdbool.h>
 #include <stdint.h>
 
-enum i2c_register {
-    i2c_rgb_light_register = 0x00,
-    i2c_red_register = 0x01,
-    i2c_green_register = 0x02,
-    i2c_blue_register = 0x03,
-    i2c_rgb_effect_register = 0x04,
-    i2c_rgb_effect_speed_register = 0x05,
-    i2c_rgb_effect_color_register = 0x06,
-    i2c_rgb_register = 0x07,
-    i2c_fan_register = 0x08,
+/// LEDs.
+enum rgb_effect {
+    rgb_effect_water_light = 0,
+    rgb_effect_breathing_light = 1,
+    rgb_effect_marqueee = 2,
+    rgb_effect_rainbow_lights = 3,
+    rgb_effect_colorful_lights = 4,
 };
 
-/// Initializes I2C.
-/// @returns true on success; false otherwise.
-bool i2c_init();
+enum rgb_effect_speed {
+    rgb_effect_speed_low = 1,
+    rgb_effect_speed_medium = 2,
+    rgb_effect_speed_high = 3,
+};
 
-/// Send data over I2C.
-/// req The I2C register.
-/// data The data that shall be sent over the I2C.
-void i2c_write(enum i2c_register reg, uint8_t data);
+enum rgb_effect_color {
+    rgb_effect_color_red = 0,
+    rgb_effect_color_green = 1,
+    rgb_effect_color_blue = 2,
+    rgb_effect_color_yellow = 3,
+    rgb_effect_color_purple = 4,
+    rgb_effect_color_cyan = 5,
+    rgb_effect_color_white = 6,
+};
 
-#endif //COOLING_HAT_I2C_H
+/// Sets the LED effect.
+/// @param effect The intended LED that shall be changed.
+/// @param speed The red value.
+/// @param color The green value.
+void set_rgb_effect(enum rgb_effect effect, enum rgb_effect_speed speed, enum rgb_effect_color color);
+
+#endif //COOLING_HAT_RGB_EFFECT_H

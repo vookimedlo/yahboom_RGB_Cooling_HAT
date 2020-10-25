@@ -41,6 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "cooling_hat_fan.h"
 #include "cooling_hat_i2c.h"
 #include "cooling_hat_rgb.h"
+#include "cooling_hat_rgb_effect.h"
 #include "cooling_hat_utils.h"
 
 struct temperature_fan_range temperature_fan_ranges[10] = {
@@ -153,32 +154,49 @@ static void parse_fan_ranges(const char *ranges_argument) {
 }
 
 static void show_usage(const char *name) {
-    PRINT("%s [-hd] [-f fan_settings] [-l led_settings] [-r fan_range,...]", name);
+    PRINT("%s [-d] [-r fan_range,...] | [-h] | [-f fan_settings] | [-l led_settings] | [-e effect_settings]", name);
     PRINT("\n\tThe following options are available:");
-    PRINT("\t\t-h                Shows usage.");
-    PRINT("\t\t-d                Runs as a daemon.");
-    PRINT("\t\t-f fan_settings   Sets the fan speed to specified value and quits.");
-    PRINT("\t\t                  fan_settings:");
-    PRINT("\t\t                     0: Fan Off");
-    PRINT("\t\t                     1: 100%% speed");
-    PRINT("\t\t                     2:  20%% speed");
-    PRINT("\t\t                     3:  30%% speed");
-    PRINT("\t\t                     4:  40%% speed");
-    PRINT("\t\t                     5:  50%% speed");
-    PRINT("\t\t                     6:  60%% speed");
-    PRINT("\t\t                     7:  70%% speed");
-    PRINT("\t\t                     8:  80%% speed");
-    PRINT("\t\t                     9:  90%% speed");
-    PRINT("\t\t-l led_settings   Sets the given LED to specified R,G,B values and quits.");
-    PRINT("\t\t                  led_settings: LED_NUMBER,RED,GREEN,BLUE");
-    PRINT("\t\t                     LED_NUMBER: 0-2");
-    PRINT("\t\t                     LED_NUMBER: 3 ... all LEDs");
-    PRINT("\t\t                            RED: 0-255");
-    PRINT("\t\t                          GREEN: 0-255");
-    PRINT("\t\t                           BLUE: 0-255");
-    PRINT("\t\t-r fan_range      Sets the fan ranges. If multiple fan_range are specified they need to be ordered from the lowest temperature!");
-    PRINT("\t\t                  fan_range: UPPER_RANGE:fan_settings");
-    PRINT("\t\t                     UPPER_RANGE: 0-255");
+    PRINT("\t\t-h                  Shows usage.");
+    PRINT("\t\t-d                  Runs as a daemon.");
+    PRINT("\t\t-f fan_settings     Sets the fan speed to the specified value and quits.");
+    PRINT("\t\t                    fan_settings:");
+    PRINT("\t\t                       0: Fan Off");
+    PRINT("\t\t                       1: 100%% speed");
+    PRINT("\t\t                       2:  20%% speed");
+    PRINT("\t\t                       3:  30%% speed");
+    PRINT("\t\t                       4:  40%% speed");
+    PRINT("\t\t                       5:  50%% speed");
+    PRINT("\t\t                       6:  60%% speed");
+    PRINT("\t\t                       7:  70%% speed");
+    PRINT("\t\t                       8:  80%% speed");
+    PRINT("\t\t                       9:  90%% speed");
+    PRINT("\t\t-l led_settings     Sets the given LED to the specified R,G,B values and quits.");
+    PRINT("\t\t                    led_settings: LED_NUMBER,RED,GREEN,BLUE");
+    PRINT("\t\t                       LED_NUMBER: 0-2");
+    PRINT("\t\t                       LED_NUMBER: 3 ... all LEDs");
+    PRINT("\t\t                              RED: 0-255");
+    PRINT("\t\t                            GREEN: 0-255");
+    PRINT("\t\t                             BLUE: 0-255");
+    PRINT("\t\t-e effect_settings  Sets the LEDs effect to the specified values and quits.");
+    PRINT("\t\t                    effect_settings: EFFECT,SPEED,COLOR");
+    PRINT("\t\t                       EFFECT: 0 ... water light");
+    PRINT("\t\t                       EFFECT: 1 ... breathing light");
+    PRINT("\t\t                       EFFECT: 2 ... marquee");
+    PRINT("\t\t                       EFFECT: 3 ... rainbow lights");
+    PRINT("\t\t                       EFFECT: 4 ... colorful lights");
+    PRINT("\t\t                        SPEED: 0 ... low");
+    PRINT("\t\t                        SPEED: 1 ... medium");
+    PRINT("\t\t                        SPEED: 2 ... high");
+    PRINT("\t\t                        COLOR: 0 ... red");
+    PRINT("\t\t                        COLOR: 1 ... green");
+    PRINT("\t\t                        COLOR: 2 ... blue");
+    PRINT("\t\t                        COLOR: 3 ... yellow");
+    PRINT("\t\t                        COLOR: 4 ... purple");
+    PRINT("\t\t                        COLOR: 5 ... cyan");
+    PRINT("\t\t                        COLOR: 6 ... white");
+    PRINT("\t\t-r fan_range        Sets the fan ranges. If multiple fan_range are specified they need to be ordered from the lowest temperature!");
+    PRINT("\t\t                    fan_range: UPPER_RANGE:fan_settings");
+    PRINT("\t\t                       UPPER_RANGE: 0-255");
 }
 
 void handle_arguments(int argc, char *argv[]) {
@@ -188,6 +206,8 @@ void handle_arguments(int argc, char *argv[]) {
     unsigned int fan_only_speed = 0;
     bool is_rgb_only = false;
     unsigned int rgb_number = 0, rgb_red = 0, rgb_green = 0, rgb_blue = 0;
+    bool is_effect_only = false;
+    unsigned int  effect = 0, effect_speed = 0, effect_color = 0;
     bool is_fan_range_customized = false;
 
     char tmp_buffer[255];
@@ -228,6 +248,30 @@ void handle_arguments(int argc, char *argv[]) {
                     exit(EXIT_FAILURE);
                 }
                 break;
+            case 'e':
+                is_effect_only = true;
+                PRINT("[APP] LED effect will be set to %s", optarg);
+                strncpy(tmp_buffer, optarg, sizeof(tmp_buffer));
+                token = strtok(tmp_buffer, ",");
+                if (!atoi_ex(token, &effect) || (effect > 4)) {
+                    PRINT("[APP] Wrong format of the effect: %s\n", optarg);
+                    exit(EXIT_FAILURE);
+                }
+                token = strtok(0, ",");
+                if (!atoi_ex(token, &effect_speed) || (effect_speed > 3)) {
+                    PRINT("[APP] Wrong format of the effect speed: %s\n", optarg);
+                    exit(EXIT_FAILURE);
+                }
+                token = strtok(0, ",");
+                if (!atoi_ex(token, &effect_color) || (effect_color > 6)) {
+                    PRINT("[APP] Wrong format of the effect color: %s\n", optarg);
+                    exit(EXIT_FAILURE);
+                }
+                if (strtok(0, ",")) {
+                    PRINT("[APP] Wrong format of the effect value: %s\n", optarg);
+                    exit(EXIT_FAILURE);
+                }
+                break;
             case 'f':
                 PRINT("[APP] Fan will be set to: %s\n", optarg);
                 if (!atoi_ex(optarg, &fan_only_speed) || (fan_only_speed > 9)) {
@@ -263,7 +307,10 @@ void handle_arguments(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    if ((is_rgb_only && is_fan_only) || (is_rgb_only | is_fan_only && is_fan_range_customized | is_daemon)) {
+    if ((is_effect_only && is_rgb_only) ||
+        (is_rgb_only && is_fan_only) ||
+        (is_effect_only && is_fan_only) ||
+        (is_rgb_only | is_effect_only | is_fan_only && is_fan_range_customized | is_daemon)) {
         PRINT("[APP] Incompatible options\n\n");
         exit(EXIT_FAILURE);
     }
@@ -271,6 +318,12 @@ void handle_arguments(int argc, char *argv[]) {
     if (!i2c_init()) {
         PRINT("[APP] I2C initialization failure");
         exit(EXIT_FAILURE);
+    }
+
+    if (is_effect_only) {
+        set_rgb_effect(effect, effect_speed, effect_color);
+        DEBUG_PRINT("[APP] Terminating ...");
+        exit(EXIT_SUCCESS);
     }
 
     if (is_rgb_only) {
