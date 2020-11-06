@@ -154,7 +154,7 @@ static void parse_fan_ranges(const char *ranges_argument) {
 }
 
 static void show_usage(const char *name) {
-    PRINT("%s [-d] [-r fan_range,...] | [-h] | [-f fan_settings] | [-l led_settings] | [-e effect_settings]", name);
+    PRINT("%s [-d] [-r fan_range:...] | [-h] | [-f fan_settings] | [-l led_settings] | [-e effect_settings]", name);
     PRINT("\n\tThe following options are available:");
     PRINT("\t\t-h                  Shows usage.");
     PRINT("\t\t-d                  Runs as a daemon.");
@@ -195,7 +195,7 @@ static void show_usage(const char *name) {
     PRINT("\t\t                        COLOR: 5 ... cyan");
     PRINT("\t\t                        COLOR: 6 ... white");
     PRINT("\t\t-r fan_range        Sets the fan ranges. If multiple fan_range are specified they need to be ordered from the lowest temperature!");
-    PRINT("\t\t                    fan_range: UPPER_RANGE:fan_settings");
+    PRINT("\t\t                    fan_range: UPPER_RANGE,fan_settings");
     PRINT("\t\t                       UPPER_RANGE: 0-255");
 }
 

@@ -22,7 +22,7 @@ The resulting binary is called `cooling_hat`.
 
 ## Usage
 ```
-./cooling_hat [-d] [-r fan_range,...] | [-h] | [-f fan_settings] | [-l led_settings] | [-e effect_settings]
+./cooling_hat [-d] [-r fan_range:...] | [-h] | [-f fan_settings] | [-l led_settings] | [-e effect_settings]
 
         The following options are available:
                 -h                  Shows usage.
@@ -64,7 +64,7 @@ The resulting binary is called `cooling_hat`.
                                         COLOR: 5 ... cyan
                                         COLOR: 6 ... white
                 -r fan_range        Sets the fan ranges. If multiple fan_range are specified they need to be ordered from the lowest temperature!
-                                    fan_range: UPPER_RANGE:fan_settings
+                                    fan_range: UPPER_RANGE,fan_settings
                                        UPPER_RANGE: 0-255
 ```
 
