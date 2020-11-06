@@ -14,8 +14,8 @@ This software is dependant on the [wiringPi][2] library.
 cd src
 mkdir build
 cd build
-cmake -DNDEBUG ..
-make
+cmake ..
+make CFLAGS=-DNDEBUG
 ```
 
 The resulting binary is called `cooling_hat`.
