@@ -92,7 +92,7 @@ cooling_hat.service                                         loaded    active   r
 
 All logging is redirected to the `/var/log/syslog` which might be useful for debugging purposes.
 
-Many thanks to @abecko who provided his yahboom HW and got the idea for implementing this!
+Many thanks to [@abecko][3] who provided his yahboom HW and got the idea for implementing this!
 
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fvookimedlo%2Fyahboom_RGB_Cooling_HAT.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fvookimedlo%2Fyahboom_RGB_Cooling_HAT?ref=badge_large)
@@ -100,3 +100,4 @@ Many thanks to @abecko who provided his yahboom HW and got the idea for implemen
 
 [1]: https://github.com/YahboomTechnology/Raspberry-Pi-RGB-Cooling-HAT/
 [2]: http://wiringpi.com/
+[3]: https://github.com/abecko
