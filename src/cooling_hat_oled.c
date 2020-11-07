@@ -40,11 +40,12 @@ void oled_initialization() {
 
 void oled_clear() {
     ssd1306_clearDisplay();
+    ssd1306_display();
 }
 
 void oled_refresh(const struct oled_information *values) {
     // Clear display
-    oled_clear();
+    ssd1306_clearDisplay();
 
     if (!values) return;
 

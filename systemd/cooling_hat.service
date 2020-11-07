@@ -1,0 +1,16 @@
+[Unit]
+Description=Yahboom's Cooling Hat control service
+Requires=multi-user.target
+After=multi-user.target
+
+[Service]
+Type=forking
+ExecStart=/opt/bin/cooling_hat -r 30,0:40,3:60,5:70,9 -d
+WorkingDirectory=/tmp
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target

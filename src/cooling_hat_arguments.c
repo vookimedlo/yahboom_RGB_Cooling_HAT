@@ -315,7 +315,7 @@ void handle_arguments(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    if (!i2c_init()) {
+    if (!is_daemon && !i2c_init()) {
         PRINT("[APP] I2C initialization failure");
         exit(EXIT_FAILURE);
     }
@@ -347,6 +347,12 @@ void handle_arguments(int argc, char *argv[]) {
               temperature_fan_ranges[i].temperature,
               temperature_fan_ranges[i].speed);
 
-    if (is_daemon)
+    if (is_daemon) {
         daemonize();
+
+        if (!i2c_init()) {
+            PRINT("[APP] I2C initialization failure");
+            exit(EXIT_FAILURE);
+        }
+    }
 }

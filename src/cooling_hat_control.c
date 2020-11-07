@@ -65,9 +65,9 @@ int main(int argc, char *argv[]) {
     signal(SIGTERM, sigterm_handler);
 
     DEBUG_PRINT("[APP] Initialization");
+    rgb_off();
     oled_initialization();
     set_fan_speed(fan_speed_0_percent);
-    rgb_off();
     sleep(BASIC_DELAY_IN_SECONDS);
     DEBUG_PRINT("[APP] Initialization is over");
 
@@ -128,7 +128,6 @@ int main(int argc, char *argv[]) {
     oled_clear();
     set_fan_speed(fan_speed_0_percent);
     rgb_off();
-    sleep(BASIC_DELAY_IN_SECONDS);
-
+    PRINT("[APP] Terminated");
     return 0;
 }

@@ -4,7 +4,7 @@
 [![Code Quality Score](https://www.code-inspector.com/project/15242/score/svg)](https://frontend.code-inspector.com/public/project/15242/yahboom_RGB_Cooling_HAT/dashboard)
 [![Code Grade](https://www.code-inspector.com/project/15242/status/svg)](https://frontend.code-inspector.com/public/project/15242/yahboom_RGB_Cooling_HAT/dashboard)
 
-The main purpose of this software was to provide a functional and configurable control SW for the *Yahboom RGB Cooling HAT*. Such SW is currently missing and Yahboom provides only programing [samples][1].
+The main purpose of this software was to provide a functional and configurable control SW for the *Yahboom RGB Cooling HAT*. Such SW is currently missing and Yahboom provides only programming [samples][1].
 
 This software is dependant on the [wiringPi][2] library.
 
@@ -67,6 +67,32 @@ The resulting binary is called `cooling_hat`.
                                     fan_range: UPPER_RANGE,fan_settings
                                        UPPER_RANGE: 0-255
 ```
+## Run upon a system start
+
+The `systemd` service script was implemented to have the starting and stopping under the control.
+
+To enable it, just copy the provided `systemd/cooling_hat.service` to the  `/etc/systemd/system/`.
+Do not forget to build the `cooling_hat` binary and copy it over to the `/opt/bin/`.
+
+Fan speed and temperature ranges may be adjusted per your needs. Simply change the line `ExecStart=/opt/bin/cooling_hat -r 30,0:40,3:60,5:70,9 -d` and provide your ranges (see the `-r` argument).
+
+Then, the service needs to be enabled.
+
+`sudo systemctl enable cooling_hat.service`
+
+Restart your RPi and check that the service is running.
+
+`systemctl list-units --type service --all`
+
+```
+UNIT                                                        LOAD      ACTIVE   SUB     DESCRIPTION                                                       
+...                              
+cooling_hat.service                                         loaded    active   running Yahboom's Cooling Hat control service  
+```
+
+All logging is redirected to the `/var/log/syslog` which might be useful for debugging purposes.
+
+Many thanks to @abecko who provided his yahboom HW and got the idea for implementing this!
 
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fvookimedlo%2Fyahboom_RGB_Cooling_HAT.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fvookimedlo%2Fyahboom_RGB_Cooling_HAT?ref=badge_large)
