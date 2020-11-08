@@ -22,10 +22,11 @@ The resulting binary is called `cooling_hat`.
 
 ## Usage
 ```
-./cooling_hat [-d] [-r fan_range:...] | [-h] | [-f fan_settings] | [-l led_settings] | [-e effect_settings]
+./cooling_hat [-d] [-q] [-r fan_range:...] | [-h] | [-f fan_settings] | [-l led_settings] | [-e effect_settings]
 
         The following options are available:
                 -h                  Shows usage.
+                -q                  Suppress logging.
                 -d                  Runs as a daemon.
                 -f fan_settings     Sets the fan speed to the specified value and quits.
                                     fan_settings:
@@ -90,7 +91,7 @@ UNIT                                                        LOAD      ACTIVE   S
 cooling_hat.service                                         loaded    active   running Yahboom's Cooling Hat control service  
 ```
 
-All logging is redirected to the `/var/log/syslog` which might be useful for debugging purposes.
+All logging is redirected to the `/var/log/syslog` which might be useful for debugging purposes. The output can be suppressed by the `-q` argument, which is specified by default in the `systemd` service.
 
 Many thanks to [@abecko][3] who provided his yahboom HW and got the idea for implementing this!
 

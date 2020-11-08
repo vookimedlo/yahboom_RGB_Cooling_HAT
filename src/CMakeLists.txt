@@ -51,10 +51,11 @@ SET(SOURCES
         cooling_hat_information.c
         cooling_hat_oled.c
         cooling_hat_rgb.c
+        cooling_hat_rgb_effect.c
         cooling_hat_utils.c
-        3rd_party_code/ssd1306_i2c.c cooling_hat_rgb_effect.c cooling_hat_rgb_effect.h)
+        3rd_party_code/ssd1306_i2c.c)
 
 ADD_EXECUTABLE(cooling_hat
-        ${SOURCES} cooling_hat_utils.c)
+        ${SOURCES})
 
 TARGET_LINK_LIBRARIES(cooling_hat wiringPi)

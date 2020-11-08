@@ -88,7 +88,8 @@ static void parse_fan_ranges(const char *ranges_argument) {
     }
 
     // Create the own copy to prevent the modification of the input string during the tokenization
-    strncpy(ranges_argument_tmp_buffer, ranges_argument, sizeof(ranges_argument_tmp_buffer));
+    strncpy(ranges_argument_tmp_buffer, ranges_argument, sizeof(ranges_argument_tmp_buffer) - 1);
+    ranges_argument_tmp_buffer[sizeof(ranges_argument_tmp_buffer) - 1]= '\0';
 
     // Tokenize the first range
     ranges_argument_token = strtok(ranges_argument_tmp_buffer, ":");
@@ -103,7 +104,8 @@ static void parse_fan_ranges(const char *ranges_argument) {
             break;
 
         // Create the own copy to prevent the modification of the input range during the tokenization
-        strncpy(ranges_tmp_buffer, ranges_argument_token, sizeof(ranges_tmp_buffer));
+        strncpy(ranges_tmp_buffer, ranges_argument_token, sizeof(ranges_tmp_buffer) - 1);
+        ranges_tmp_buffer[sizeof(ranges_tmp_buffer) - 1]= '\0';
 
         // Tokenize the temperature from the given range
         token = strtok(ranges_tmp_buffer, ",");
@@ -154,9 +156,10 @@ static void parse_fan_ranges(const char *ranges_argument) {
 }
 
 static void show_usage(const char *name) {
-    PRINT("%s [-d] [-r fan_range:...] | [-h] | [-f fan_settings] | [-l led_settings] | [-e effect_settings]", name);
+    PRINT("%s [-d] [-q] [-r fan_range:...] | [-h] | [-f fan_settings] | [-l led_settings] | [-e effect_settings]", name);
     PRINT("\n\tThe following options are available:");
     PRINT("\t\t-h                  Shows usage.");
+    PRINT("\t\t-q                  Suppress logging.");
     PRINT("\t\t-d                  Runs as a daemon.");
     PRINT("\t\t-f fan_settings     Sets the fan speed to the specified value and quits.");
     PRINT("\t\t                    fan_settings:");
@@ -213,8 +216,11 @@ void handle_arguments(int argc, char *argv[]) {
     char tmp_buffer[255];
     char *token;
 
-    while ((opt = getopt(argc, argv, ":l:r:f:hd")) != -1) {
+    while ((opt = getopt(argc, argv, ":l:r:f:hdq")) != -1) {
         switch (opt) {
+            case 'q':
+                suppress_logs = true;
+                break;
             case 'd':
                 is_daemon = true;
                 PRINT("[APP] Will run as a daemon");
@@ -222,7 +228,8 @@ void handle_arguments(int argc, char *argv[]) {
             case 'l':
                 is_rgb_only = true;
                 PRINT("[APP] LED will be set to %s", optarg);
-                strncpy(tmp_buffer, optarg, sizeof(tmp_buffer));
+                strncpy(tmp_buffer, optarg, sizeof(tmp_buffer) - 1);
+                tmp_buffer[sizeof(tmp_buffer) - 1]= '\0';
                 token = strtok(tmp_buffer, ",");
                 if (!atoi_ex(token, &rgb_number) || (rgb_number > 3)) {
                     PRINT("[APP] Wrong format of the LED number: %s\n", optarg);
@@ -251,7 +258,8 @@ void handle_arguments(int argc, char *argv[]) {
             case 'e':
                 is_effect_only = true;
                 PRINT("[APP] LED effect will be set to %s", optarg);
-                strncpy(tmp_buffer, optarg, sizeof(tmp_buffer));
+                strncpy(tmp_buffer, optarg, sizeof(tmp_buffer) - 1);
+                tmp_buffer[sizeof(tmp_buffer) - 1]= '\0';
                 token = strtok(tmp_buffer, ",");
                 if (!atoi_ex(token, &effect) || (effect > 4)) {
                     PRINT("[APP] Wrong format of the effect: %s\n", optarg);

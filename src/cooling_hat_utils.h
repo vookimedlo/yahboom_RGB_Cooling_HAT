@@ -34,32 +34,35 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define COOLING_UTILS_H
 
 #include <stdbool.h>
+#include <stdio.h>
 #include <syslog.h>
 
 extern bool has_tty;
+extern bool suppress_logs;
 
 #if defined(NDEBUG)
 #define DEBUG_PRINT(...)
-#else
+#else // !NDEBUG
 
-#include <stdio.h>
-
-#define DEBUG_PRINT(FORMAT, ...)                                         \
-        do {                                                             \
-            if (has_tty)                                                  \
-                fprintf(stderr, FORMAT "\n" __VA_OPT__(,)  __VA_ARGS__); \
-            else                                                         \
-                syslog(LOG_DEBUG, FORMAT __VA_OPT__(,)  __VA_ARGS__);    \
+#define DEBUG_PRINT(FORMAT, ...)                                             \
+        do {                                                                 \
+            if (!suppress_logs) {                                            \
+                if (has_tty)                                                 \
+                    fprintf(stderr, FORMAT "\n" __VA_OPT__(,)  __VA_ARGS__); \
+                else                                                         \
+                    syslog(LOG_DEBUG, FORMAT __VA_OPT__(,)  __VA_ARGS__);    \
+            }                                                                \
         } while(0)
-#endif // DEBUG
+#endif // !NDEBUG
 
-#define PRINT(FORMAT, ...)                                               \
-        do {                                                             \
-            if (has_tty)                                                  \
-                fprintf(stderr, FORMAT "\n" __VA_OPT__(,)  __VA_ARGS__); \
-            else                                                         \
-                syslog(LOG_INFO, FORMAT __VA_OPT__(,)  __VA_ARGS__);     \
+#define PRINT(FORMAT, ...)                                                   \
+        do {                                                                 \
+            if (!suppress_logs) {                                            \
+                if (has_tty)                                                 \
+                    fprintf(stderr, FORMAT "\n" __VA_OPT__(,)  __VA_ARGS__); \
+                else                                                         \
+                    syslog(LOG_INFO, FORMAT __VA_OPT__(,)  __VA_ARGS__);     \
+            }                                                                \
         } while(0)
-
 
 #endif //COOLING_UTILS_H

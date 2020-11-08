@@ -33,3 +33,4 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "cooling_hat_utils.h"
 
 bool has_tty = true;
+bool suppress_logs = false;
