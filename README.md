@@ -4,7 +4,7 @@
 [![Code Quality Score](https://www.code-inspector.com/project/15242/score/svg)](https://frontend.code-inspector.com/public/project/15242/yahboom_RGB_Cooling_HAT/dashboard)
 [![Code Grade](https://www.code-inspector.com/project/15242/status/svg)](https://frontend.code-inspector.com/public/project/15242/yahboom_RGB_Cooling_HAT/dashboard)
 
-The main purpose of this software was to provide a functional and configurable control SW for the *Yahboom RGB Cooling HAT*. Such SW is currently missing and Yahboom provides only programming [samples][1].
+The main purpose of this software was to provide a functional and configurable controlling SW for the *Yahboom RGB Cooling HAT*. Such SW is currently missing and Yahboom provides only programming [samples][1].
 
 This software is dependant on the [wiringPi][2] library.
 
