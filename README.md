@@ -3,6 +3,7 @@
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fvookimedlo%2Fyahboom_RGB_Cooling_HAT.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fvookimedlo%2Fyahboom_RGB_Cooling_HAT?ref=badge_shield)
 [![Code Quality Score](https://www.code-inspector.com/project/15242/score/svg)](https://frontend.code-inspector.com/public/project/15242/yahboom_RGB_Cooling_HAT/dashboard)
 [![Code Grade](https://www.code-inspector.com/project/15242/status/svg)](https://frontend.code-inspector.com/public/project/15242/yahboom_RGB_Cooling_HAT/dashboard)
+![CMake](https://github.com/vookimedlo/yahboom_RGB_Cooling_HAT/workflows/CMake/badge.svg)
 
 The main purpose of this software was to provide a functional and configurable controlling SW for the *Yahboom RGB Cooling HAT*. Such SW is currently missing and Yahboom provides only programming [samples][1].
 

@@ -58,4 +58,4 @@ SET(SOURCES
 ADD_EXECUTABLE(cooling_hat
         ${SOURCES})
 
-TARGET_LINK_LIBRARIES(cooling_hat wiringPi)
+TARGET_LINK_LIBRARIES(cooling_hat wiringPi -lpthread -lm -lcrypt -lrt)
